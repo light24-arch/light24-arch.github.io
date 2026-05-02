@@ -32,22 +32,16 @@ const cardSpring = {
 
 const slideVariants = {
   enter: {
-    y: '40%',
-    rotateZ: 1.5,
     opacity: 0,
-    scale: 0.95,
+    scale: 0.97,
   },
   center: {
-    y: 0,
-    rotateZ: 0,
     opacity: 1,
     scale: 1,
   },
   exit: {
-    y: '-35%',
-    rotateZ: -2,
     opacity: 0,
-    scale: 0.96,
+    scale: 1.02,
   },
 };
 
