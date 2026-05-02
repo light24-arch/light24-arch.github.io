@@ -3,6 +3,8 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
+  site: 'https://light24-arch.github.io',
+  base: '/',
   integrations: [react(), tailwind()],
   output: 'static',
   experimental: {
