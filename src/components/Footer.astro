@@ -1,0 +1,57 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer id="contact" class="bg-[#0A0A0A] text-white px-8 lg:px-12 py-24">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-16 md:gap-24">
+      <!-- 关于我 -->
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-white/50 mb-6">XUJINGYI</p>
+        <p class="text-2xl lg:text-3xl font-medium leading-tight tracking-tight max-w-md">
+          Space to Space
+        </p>
+      </div>
+
+      <!-- 联系方式 -->
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-white/50 mb-6">联系</p>
+        <ul class="space-y-3 text-sm text-white/70">
+          <li>
+            <a href="mailto:lightingup24@163.com" class="hover:text-white transition-colors">
+              lightingup24@163.com
+            </a>
+          </li>
+          <li class="text-white/40">广东 · 深圳</li>
+        </ul>
+      </div>
+
+      <!-- 社交媒体 -->
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-white/50 mb-6">关注</p>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a
+              href="https://www.xiaohongshu.com/user/profile/61ed523d0000000010006da3"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-white/70 hover:text-white transition-colors relative inline-block group"
+            >
+              小红书
+              <span class="absolute left-0 bottom-0 w-0 h-[1px] bg-white/50 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-24 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <p class="text-xs uppercase tracking-[0.15em] text-white/30">
+        &copy; {year} XUJINGYI. All rights reserved.
+      </p>
+      <p class="text-[0.6875rem] uppercase tracking-[0.15em] text-white/20">
+        广东 · 深圳
+      </p>
+    </div>
+  </div>
+</footer>

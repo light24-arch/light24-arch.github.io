@@ -1,0 +1,24 @@
+{
+  "collections": [
+    {
+      "hasSchema": true,
+      "name": "artwork"
+    },
+    {
+      "hasSchema": true,
+      "name": "projects"
+    }
+  ],
+  "entries": {
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/artwork/fish-lotus-pavilion.md": "artwork",
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/artwork/architectural-photography.md": "artwork",
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/artwork/stainless-planter.md": "artwork",
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/artwork/parasitic-furniture.md": "artwork",
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/projects/four-bodies-five-grains.md": "projects",
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/projects/project4.md": "projects",
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/projects/please-answer-1958.md": "projects",
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/projects/project2.md": "projects",
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/projects/project5.md": "projects",
+    "file:///c:/users/lenovo/desktop/%e7%ba%bf%e4%b8%8a%e4%bd%9c%e5%93%81%e9%9b%86/src/content/projects/project6.md": "projects"
+  }
+}

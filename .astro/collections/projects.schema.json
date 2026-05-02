@@ -1,0 +1,163 @@
+{
+  "$ref": "#/definitions/projects",
+  "definitions": {
+    "projects": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "year": {
+          "type": "number"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Residential",
+            "Cultural",
+            "Commercial",
+            "Public",
+            "Hotel",
+            "Museum",
+            "Mixed-Use",
+            "Masterplan",
+            "Concept"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Built",
+            "In Progress",
+            "Competition",
+            "Concept",
+            "Design"
+          ]
+        },
+        "brief": {
+          "type": "string"
+        },
+        "concept": {
+          "type": "string"
+        },
+        "client": {
+          "type": "string"
+        },
+        "area": {
+          "type": "string"
+        },
+        "team": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "hero": {
+          "type": "string"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "closing_image": {
+          "type": "string"
+        },
+        "gallery_images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "preview_aspect": {
+          "type": "string",
+          "default": "4/3"
+        },
+        "preview_columns": {
+          "type": "string",
+          "default": "7/5"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "number": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "layout": {
+                "type": "string",
+                "enum": [
+                  "image-left",
+                  "image-right",
+                  "image-center",
+                  "full-width",
+                  "transition",
+                  "wide",
+                  "wide-transition",
+                  "image-right-wide",
+                  "image-left-wide",
+                  "image-right-7",
+                  "transition-6",
+                  "transition-5",
+                  "transition-7",
+                  "closing-7"
+                ]
+              }
+            },
+            "required": [
+              "number",
+              "label",
+              "title",
+              "text",
+              "image",
+              "layout"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "order": {
+          "type": "number",
+          "default": 0
+        },
+        "featured": {
+          "type": "boolean",
+          "default": true
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "location",
+        "year",
+        "category",
+        "status",
+        "brief",
+        "hero"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

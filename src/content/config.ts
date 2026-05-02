@@ -1,0 +1,68 @@
+import { defineCollection, z } from 'astro:content';
+
+const projects = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    location: z.string(),
+    year: z.number(),
+    category: z.enum(['Residential', 'Cultural', 'Commercial', 'Public', 'Hotel', 'Museum', 'Mixed-Use', 'Masterplan', 'Concept']),
+    status: z.enum(['Built', 'In Progress', 'Competition', 'Concept', 'Design']),
+    brief: z.string(),
+    concept: z.string().optional(),
+    client: z.string().optional(),
+    area: z.string().optional(),
+    team: z.string().optional(),
+    role: z.string().optional(),
+    hero: z.string(),
+    images: z.array(z.string()).default([]),
+    closing_image: z.string().optional(),
+    gallery_images: z.array(z.string()).default([]),
+    preview_aspect: z.string().default('4/3'),
+    preview_columns: z.string().default('7/5'),
+    features: z.array(z.object({
+      number: z.string(),
+      label: z.string(),
+      title: z.string(),
+      text: z.string(),
+      image: z.string(),
+      layout: z.enum(['image-left', 'image-right', 'image-center', 'full-width', 'transition', 'wide', 'wide-transition', 'image-right-wide', 'image-left-wide', 'image-right-7', 'transition-6', 'transition-5', 'transition-7', 'closing-7']),
+    })).default([]),
+    order: z.number().default(0),
+    featured: z.boolean().default(true),
+  }),
+});
+
+const artwork = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    year: z.union([z.number(), z.string()]),
+    medium: z.string(),
+    brief: z.string().optional(),
+    concept: z.string().optional(),
+    project_type: z.string().optional(),
+    area: z.string().optional(),
+    design_time: z.string().optional(),
+    construction_time: z.string().optional(),
+    instructor: z.string().optional(),
+    team: z.string().optional(),
+    hero: z.string(),
+    images: z.array(z.string()).default([]),
+    closing_image: z.string().optional(),
+    gallery_images: z.array(z.string()).default([]),
+    gallery_aspect: z.string().optional(),
+    features: z.array(z.object({
+      number: z.string(),
+      label: z.string(),
+      title: z.string(),
+      text: z.string(),
+      image: z.string(),
+      layout: z.enum(['image-left', 'image-right', 'image-center', 'full-width', 'transition', 'wide', 'wide-transition', 'image-right-wide', 'image-left-wide', 'image-right-7', 'transition-6', 'transition-5', 'transition-7', 'closing-7']),
+    })).default([]),
+    order: z.number().default(0),
+    featured: z.boolean().default(true),
+  }),
+});
+
+export const collections = { projects, artwork };

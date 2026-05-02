@@ -1,0 +1,31 @@
+---
+const nav = [
+  { label: '作品', href: '/' },
+  { label: '关于我', href: '/#about' },
+  { label: '其他', href: '/#otherworks' },
+  { label: '联系', href: '/#contact' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
+  <nav class="flex items-center justify-between px-8 lg:px-12 py-6">
+    <a
+      href="/"
+      class="text-base uppercase tracking-[0.2em] text-white font-medium hover:opacity-60 transition-opacity"
+    >
+      XUJINGYI
+    </a>
+    <ul class="flex items-center gap-8">
+      {nav.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="text-base uppercase tracking-[0.15em] text-white/80 hover:text-white transition-colors"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>

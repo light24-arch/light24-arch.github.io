@@ -1,0 +1,163 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import HeroCarousel from '../components/HeroCarousel';
+import TextReveal from '../components/TextReveal';
+import FadeIn from '../components/FadeIn';
+import ProjectCard from '../components/ProjectCard';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 6);
+
+const allArtworks = await getCollection('artwork');
+const artworks = allArtworks
+  .filter((a) => a.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+
+const carouselSlides = projects.filter((p) => [2, 3, 5, 6].includes(p.data.order)).map((p) => ({
+  image: p.data.hero,
+  title: p.data.title,
+  href: `/projects/${p.slug}`,
+}));
+
+const categoryLabel: Record<string, string> = {
+  'Residential': '住宅',
+  'Cultural': '文化',
+  'Commercial': '商业',
+  'Public': '公共',
+  'Mixed-Use': '混合功能',
+  'Masterplan': '总体规划', 'Concept': '概念设计',
+};
+
+const statusLabel: Record<string, string> = {
+  'Built': '已建成',
+  'In Progress': '建设中',
+  'Competition': '竞赛',
+  'Concept': '概念',
+};
+---
+
+<Base
+  title="首页"
+  description="林 — 建筑·空间·跨界创作的个人作品集。"
+>
+
+  <!-- ═══════════════ HERO CAROUSEL ═══════════════ -->
+  <HeroCarousel slides={carouselSlides} client:load />
+
+  <!-- ═══════════════ 关于我 — 极度克制·纯左对齐·完全留白右侧 ═══════════════ -->
+  <section id="about" class="px-8 lg:px-12 py-40 lg:py-56 max-w-[1440px] mx-auto">
+    <div class="max-w-2xl">
+      <TextReveal
+        as="p"
+        className="text-xl lg:text-3xl font-medium leading-relaxed tracking-[-0.01em] text-text-primary"
+        stagger={0.04}
+        delay={0.2}
+        client:visible
+        text={`建筑不仅是空间的载体，更是人与人、人与社区、\n人与自然之间连接的纽带。`}
+      />
+
+      <FadeIn client:visible delay={0.6}>
+        <div class="mt-16 space-y-5 text-sm text-text-secondary leading-relaxed">
+          <p>
+            在城市中长大的过程中，电视机与父母口中的"邻里关系"似乎已经消失不见。
+            住宅作为我们停留时间最长的空间，却阻隔了人与人之间交流的机会。
+            而在 AI 浪潮席卷的今天，获取信息的渠道无限扩展，人与人之间的距离被无限拉近，又被无限推远。
+          </p>
+          <p>
+            即使在未来，对实体空间的讨论或许已无意义。但在可预见的当下，建筑依旧是物质空间的重要载体，
+            是生产生活的基本空间。后疫情时代，我们逐渐意识到面对面互动的无可替代性——
+            建筑作为这一功能的重要载体，自然有着"以人为本"的根本设计需求。
+          </p>
+          <p>
+            回顾本科至今的建筑学习生涯，我常以"生活方式"为切入点，以人们对生活的需求为设计首要考虑，
+            建筑成为我对未来生活方式想象的投射。这本作品集，是我对建筑，也是对生活方式的思考。
+          </p>
+        </div>
+      </FadeIn>
+    </div>
+  </section>
+
+  <!-- ═══════════════ SELECTED WORKS — 大幅间距·画册呼吸感 ═══════════════ -->
+  <section class="px-8 lg:px-12 pb-48 lg:pb-64 max-w-[1440px] mx-auto">
+    <FadeIn client:visible>
+      <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-text-tertiary mb-6">
+        Selected Works
+      </p>
+      <p class="text-sm text-text-secondary mb-20 leading-relaxed max-w-xl">
+        以下为近年完成的代表性建筑项目。每个项目都代表了对特定场地、文化与建造条件的独立回应。
+      </p>
+    </FadeIn>
+
+    <div>
+      {
+        projects.map((project, i) => (
+          <section class="mb-[200px] lg:mb-[280px] last:mb-0">
+            <ProjectCard
+              images={project.data.images}
+              slug={project.slug}
+              category={`${categoryLabel[project.data.category] || project.data.category} · ${project.data.location}`}
+              title={project.data.title}
+              year={project.data.year}
+              status={statusLabel[project.data.status] || project.data.status}
+              area={project.data.area || ''}
+              brief={project.data.brief || ''}
+              aspect={project.data.preview_aspect || '4/3'}
+              columns={project.data.preview_columns || '5/4'}
+              isEven={i % 2 === 0}
+              client:load
+            />
+          </section>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ═══════════════ ARTWORK ═══════════════ -->
+  <section id="otherworks" class="border-t border-border px-8 lg:px-12 py-40 lg:py-56">
+    <div class="max-w-[1440px] mx-auto">
+      <FadeIn client:visible>
+        <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-text-tertiary mb-6">
+          otherworks
+        </p>
+      </FadeIn>
+
+      <TextReveal
+        as="h2"
+        className="text-3xl lg:text-5xl font-medium tracking-[-0.02em] max-w-3xl mb-6"
+        stagger={0.04}
+        client:visible
+        text="建筑之外"
+      />
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {artworks.map((art, i) => (
+          <a
+            href={`/artwork/${art.slug}`}
+            class="group block"
+          >
+            <FadeIn client:visible delay={i * 0.12}>
+              <div class="overflow-hidden aspect-[3/4] mb-4 shadow-2xl transition-transform duration-700 group-hover:scale-[1.03]">
+                <img
+                  src={art.data.hero}
+                  alt={art.data.title}
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <p class="text-xl font-medium">{art.data.title}</p>
+              <p class="text-sm uppercase tracking-[0.15em] text-text-tertiary mt-1">
+                {art.data.medium}
+              </p>
+            </FadeIn>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Base>

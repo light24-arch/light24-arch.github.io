@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm view *)",
+      "Bash(npx astro *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/projects/villa-chengdu)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/projects/mountain-museum)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4322/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4322/projects/villa-chengdu)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4322/artwork/chromatophore)"
+    ]
+  }
+}

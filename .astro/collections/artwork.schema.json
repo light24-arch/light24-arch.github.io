@@ -1,0 +1,140 @@
+{
+  "$ref": "#/definitions/artwork",
+  "definitions": {
+    "artwork": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "year": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "medium": {
+          "type": "string"
+        },
+        "brief": {
+          "type": "string"
+        },
+        "concept": {
+          "type": "string"
+        },
+        "project_type": {
+          "type": "string"
+        },
+        "area": {
+          "type": "string"
+        },
+        "design_time": {
+          "type": "string"
+        },
+        "construction_time": {
+          "type": "string"
+        },
+        "instructor": {
+          "type": "string"
+        },
+        "team": {
+          "type": "string"
+        },
+        "hero": {
+          "type": "string"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "closing_image": {
+          "type": "string"
+        },
+        "gallery_images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "gallery_aspect": {
+          "type": "string"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "number": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "layout": {
+                "type": "string",
+                "enum": [
+                  "image-left",
+                  "image-right",
+                  "image-center",
+                  "full-width",
+                  "transition",
+                  "wide",
+                  "wide-transition",
+                  "image-right-wide",
+                  "image-left-wide",
+                  "image-right-7",
+                  "transition-6",
+                  "transition-5",
+                  "transition-7",
+                  "closing-7"
+                ]
+              }
+            },
+            "required": [
+              "number",
+              "label",
+              "title",
+              "text",
+              "image",
+              "layout"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "order": {
+          "type": "number",
+          "default": 0
+        },
+        "featured": {
+          "type": "boolean",
+          "default": true
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "year",
+        "medium",
+        "hero"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

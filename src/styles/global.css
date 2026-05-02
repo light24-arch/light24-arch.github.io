@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Lenis ── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ── Base ── */
+html {
+  background: #FFFFFF;
+  color: #0A0A0A;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans", Arial, "PingFang SC", "Noto Sans SC", "Source Han Sans CN", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* ── Selection ── */
+::selection {
+  background: #0A0A0A;
+  color: #FFFFFF;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4D4D4;
+  border-radius: 2px;
+}
+
+/* ── Astro View Transitions ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+  animation: fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Typography helpers ── */
+.helvetica {
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans", Arial, sans-serif;
+}
+
+/* ── Prose：画册级文字层级 ── */
+.prose-architecture {
+  @apply max-w-none text-text-primary;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+}
+
+/* H1 — 总体介绍 / Main Concept：大号 · 轻字重 · 宽行距 */
+.prose-architecture h1 {
+  @apply text-2xl lg:text-3xl font-light tracking-[-0.02em] leading-relaxed mt-8 mb-12 text-text-primary;
+}
+
+/* H2 — 分点特征 / Key Features：左侧极简装饰线 + 适中字号 */
+.prose-architecture h2 {
+  @apply text-base font-medium tracking-[-0.01em] mt-20 mb-6 text-text-primary;
+  padding-left: 1rem;
+  border-left: 1.5px solid #0A0A0A;
+  line-height: 1.5;
+}
+
+/* H3 — 子特征：小号 · 宽松间距 */
+.prose-architecture h3 {
+  @apply text-sm font-medium tracking-normal mt-12 mb-3 text-text-secondary;
+}
+
+/* P — 正文段落 */
+.prose-architecture p {
+  @apply mb-6 text-text-secondary leading-loose;
+}
+
+/* Strong — 段落内强调 */
+.prose-architecture strong {
+  @apply font-medium text-text-primary;
+}
+
+/* HR — 节与节的呼吸 */
+.prose-architecture hr {
+  @apply my-20 border-border;
+}
+
+/* Em — 辅助说明 */
+.prose-architecture em {
+  @apply text-text-tertiary;
+  font-style: normal;
+}
+
+/* UL/OL — 列表 */
+.prose-architecture ul {
+  @apply mb-6 pl-5 text-text-secondary leading-loose;
+  list-style-type: square;
+}
+.prose-architecture li {
+  @apply mb-2;
+}
+
+/* IMG — 嵌入图片：原始比例 · 全宽 · 大幅呼吸间距 */
+.prose-architecture img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 3rem 0;
+}
+@media (min-width: 1024px) {
+  .prose-architecture img {
+    margin: 5rem 0;
+  }
+}
+
+/* 编辑式变体：偏左 · 60% 宽 · 右侧留白 */
+.prose-architecture img.img-left {
+  width: 62%;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* 编辑式变体：偏右 · 60% 宽 · 左侧留白 */
+.prose-architecture img.img-right {
+  width: 62%;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+/* 编辑式变体：全宽 · 去除上下间距（用于连续图片组） */
+.prose-architecture img.img-full {
+  margin: 2rem 0;
+}
+@media (min-width: 1024px) {
+  .prose-architecture img.img-full {
+    margin: 3rem 0;
+  }
+}
+
+/* ── 极简细线 ── */
+.hairline {
+  height: 1px;
+  background-color: #E5E5E5;
+  width: 100%;
+}
