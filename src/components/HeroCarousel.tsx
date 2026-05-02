@@ -60,7 +60,7 @@ export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselPr
   const current = slides[index];
 
   return (
-    <section className="relative aspect-[1/1] lg:h-screen overflow-hidden bg-black" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+    <section className="relative aspect-[1/1] lg:aspect-auto lg:h-screen overflow-hidden bg-black" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
