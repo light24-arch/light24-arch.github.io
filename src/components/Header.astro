@@ -7,11 +7,11 @@ const nav = [
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none md:mix-blend-difference">
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-colors duration-300">
   <nav class="flex items-center justify-between px-8 lg:px-12 py-6">
     <a
       href="/"
-      class="text-base uppercase tracking-[0.2em] text-white font-medium hover:opacity-60 transition-opacity"
+      class="text-base uppercase tracking-[0.2em] font-medium transition-colors duration-300"
     >
       XUJINGYI
     </a>
@@ -20,7 +20,7 @@ const nav = [
         <li>
           <a
             href={item.href}
-            class="text-base uppercase tracking-[0.15em] text-white/80 hover:text-white transition-colors"
+            class="text-base uppercase tracking-[0.15em] transition-colors duration-300"
           >
             {item.label}
           </a>
@@ -29,3 +29,41 @@ const nav = [
     </ul>
   </nav>
 </header>
+
+<style>
+  #site-header {
+    color: white;
+    background: transparent;
+  }
+  #site-header.scrolled {
+    color: #0A0A0A;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #E5E5E5;
+  }
+  #site-header.scrolled a {
+    color: #0A0A0A;
+  }
+  #site-header.scrolled a:hover {
+    opacity: 0.5;
+  }
+  /* desktop: keep transparent with white text */
+  @media (min-width: 768px) {
+    #site-header {
+      mix-blend-mode: difference;
+    }
+    #site-header.scrolled {
+      mix-blend-mode: normal;
+    }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('site-header');
+  const onScroll = () => {
+    header.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.4);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
