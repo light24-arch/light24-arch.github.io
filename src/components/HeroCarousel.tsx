@@ -49,7 +49,7 @@ export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselPr
   const current = slides[index];
 
   return (
-    <section className="relative aspect-[3/2] lg:h-screen overflow-hidden bg-black">
+    <section className="relative aspect-[1/1] lg:h-screen overflow-hidden bg-black">
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
