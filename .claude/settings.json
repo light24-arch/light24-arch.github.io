@@ -6,7 +6,12 @@
       "Bash(git init *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git config *)"
+      "Bash(git config *)",
+      "Read(//c/Users/Lenovo/.ssh/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://light24-arch.github.io/)",
+      "Bash(curl -s https://light24-arch.github.io/)",
+      "Bash(npm run *)",
+      "Bash(git push *)"
     ]
   }
 }

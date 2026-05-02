@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProjectCardProps {
@@ -65,8 +65,8 @@ export default function ProjectCard({
   isEven,
 }: ProjectCardProps) {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState<1 | -1>(1);
   const [hover, setHover] = useState(false);
+  const [touchDevice, setTouchDevice] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const imgRef = useRef<HTMLDivElement>(null);
 
@@ -83,24 +83,39 @@ export default function ProjectCard({
     setTilt({ x: 0, y: 0 });
   };
 
+  useEffect(() => {
+    setTouchDevice(!window.matchMedia('(hover: hover)').matches);
+  }, []);
+
   const total = images.length;
-  const showArrows = total > 1 && hover;
+  const showArrows = total > 1 && (hover || touchDevice);
 
   const shift = useCallback(
-    (dir: 1 | -1) => (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setDirection(dir);
+    (dir: 1 | -1) => (e?: React.MouseEvent) => {
+      e?.preventDefault();
+      e?.stopPropagation();
       setIndex((i) => (i + dir + total) % total);
     },
     [total],
   );
 
+  const touchStartX = useRef(0);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(delta) > 40) {
+      e.preventDefault();
+      shift(delta < 0 ? 1 : -1)();
+    }
+  };
+
   return (
     <a
       href={`/projects/${slug}`}
       onMouseEnter={() => setHover(true)}
-      className={`group block grid grid-cols-1 gap-16 lg:gap-32 items-center ${gridCols[columns] || gridCols['7/5']} ${
+      className={`group block grid grid-cols-1 gap-8 lg:gap-32 items-center ${gridCols[columns] || gridCols['7/5']} ${
         !isEven ? 'lg:[&>*:first-child]:order-2' : ''
       }`}
     >
@@ -110,6 +125,8 @@ export default function ProjectCard({
         ref={imgRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <div
           style={{

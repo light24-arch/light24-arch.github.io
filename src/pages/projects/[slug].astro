@@ -2,17 +2,9 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import FadeIn from '../../components/FadeIn';
-import ParallaxImage from '../../components/ParallaxImage';
 import HorizontalGallery from '../../components/HorizontalGallery';
-
-const categoryLabel: Record<string, string> = {
-  'Residential': '住宅', 'Cultural': '文化', 'Commercial': '商业',
-  'Public': '公共', 'Hotel': '酒店', 'Museum': '博物馆',
-  'Mixed-Use': '混合功能', 'Masterplan': '总体规划', 'Concept': '概念设计',
-};
-const statusLabel: Record<string, string> = {
-  'Built': '已建成', 'In Progress': '建设中', 'Competition': '竞赛', 'Concept': '概念', 'Design': '方案设计',
-};
+import { categoryLabel, statusLabel } from '../../utils/labels';
+import { featureGrid, hiddenLayouts } from '../../utils/featureGrid';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -28,86 +20,6 @@ const specs = [
   { label: '面积', value: data.area || '—' },
   { label: '角色', value: data.role || data.team || '—' },
 ];
-
-function featureGrid(layout: string) {
-  switch (layout) {
-    case 'image-left':
-      return {
-        row: 'items-end',
-        image: 'col-span-12 md:col-span-7',
-        text: 'col-span-12 md:col-span-4 md:col-start-9 pb-12',
-        imgOrder: '', textOrder: '',
-      };
-    case 'image-right':
-      return {
-        row: 'items-center',
-        image: 'col-span-12 md:col-span-5 md:col-start-7 order-1 md:order-2',
-        text: 'col-span-12 md:col-span-4 md:col-start-2 order-2 md:order-1 pt-12 md:pt-0',
-        imgOrder: '', textOrder: '',
-      };
-    case 'image-center':
-      return {
-        row: 'items-start',
-        image: 'col-span-12 md:col-span-6 md:col-start-3',
-        text: 'col-span-12 md:col-span-3 md:col-start-10 mt-12 md:mt-24',
-        imgOrder: '', textOrder: '',
-      };
-    case 'full-width':
-      return {
-        row: 'items-start',
-        image: 'col-span-12',
-        text: 'hidden',
-        imgOrder: '', textOrder: '',
-      };
-    case 'image-right-7':
-      return { row: 'items-end', image: 'col-span-12 md:col-span-7 md:col-start-6', text: 'col-span-12 md:col-span-4 md:col-start-2 pb-12' };
-    case 'transition-5':
-      return { row: 'items-start', image: 'col-span-12 md:col-span-5', text: 'hidden' };
-    case 'transition-7':
-      return { row: 'items-start', image: 'col-span-12 md:col-span-7', text: 'hidden' };
-    case 'transition-6':
-      return { row: 'items-start', image: 'col-span-12 md:col-span-6 md:col-start-4', text: 'hidden' };
-    case 'closing-7':
-      return { row: 'items-start', image: 'col-span-12 md:col-span-7', text: 'hidden' };
-    case 'image-left-wide':
-      return { row: 'items-end', image: 'col-span-12 md:col-span-8', text: 'col-span-12 md:col-span-3 md:col-start-10 pb-12' };
-    case 'image-right-wide':
-      return {
-        row: 'items-start',
-        image: 'col-span-12 md:col-span-8 md:col-start-5',
-        text: 'col-span-12 md:col-span-3 md:col-start-1 md:row-start-1 mt-12 md:mt-24',
-        imgOrder: '', textOrder: '',
-      };
-    case 'wide-transition':
-      return {
-        row: 'items-start',
-        image: 'col-span-12 md:col-span-10 md:col-start-2',
-        text: 'hidden',
-        imgOrder: '', textOrder: '',
-      };
-    case 'transition':
-      return {
-        row: 'items-start',
-        image: 'col-span-12 md:col-span-9 md:col-start-2',
-        text: 'hidden',
-        imgOrder: '', textOrder: '',
-      };
-    case 'wide':
-      return {
-        row: 'items-end',
-        image: 'col-span-12 md:col-span-9',
-        text: 'col-span-12 md:col-span-3 md:col-start-10 pb-8 mt-8 md:mt-0',
-        imgOrder: '', textOrder: '',
-      };
-    default:
-      return {
-        row: 'items-start',
-        image: 'col-span-12 md:col-span-6 md:col-start-3',
-        text: 'col-span-12 md:col-span-3 md:col-start-10 mt-12 md:mt-24',
-        imgOrder: '', textOrder: '',
-      };
-  }
-}
 ---
 
 <Base
@@ -133,7 +45,7 @@ function featureGrid(layout: string) {
       <p class="text-xs tracking-[0.2em] text-text-tertiary uppercase mb-4">
         {data.year} · {categoryLabel[data.category] || data.category} / {data.location}
       </p>
-      <h1 class="text-6xl md:text-8xl font-bold tracking-tighter mb-12 text-text-primary">
+      <h1 class="text-[2.5rem] md:text-8xl font-bold tracking-tighter mb-12 text-text-primary leading-[1.05]">
         {data.title}
       </h1>
       <div class="hairline"></div>
@@ -157,7 +69,7 @@ function featureGrid(layout: string) {
     <section class="px-6 md:px-12 max-w-[90rem] mx-auto mb-48">
       <div class="grid grid-cols-12 gap-8">
         <div class="col-span-12 md:col-span-8 md:col-start-3 text-center">
-          <p class="text-2xl md:text-4xl leading-snug font-light text-text-primary">
+          <p class="text-lg md:text-4xl leading-snug font-light text-text-primary">
             {data.concept}
           </p>
         </div>
@@ -175,7 +87,7 @@ function featureGrid(layout: string) {
             <div class={`${g.image}`}>
               <img src={f.image} alt={f.title} class="w-full h-auto block" loading="lazy" />
             </div>
-            {!['full-width','transition','wide-transition','transition-5','transition-6','transition-7','closing-7'].includes(f.layout) && (
+            {!hiddenLayouts.includes(f.layout) && (
               <div class={`${g.text}`}>
                 <h2 class="text-xs tracking-[0.2em] text-text-tertiary uppercase mb-4 border-b border-border pb-2">
                   {f.number}. {f.label}
