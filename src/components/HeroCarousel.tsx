@@ -17,6 +17,7 @@ export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselPr
   const [progress, setProgress] = useState(0);
   const elapsedRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const touchStartX = useRef(0);
 
   const goTo = useCallback((i: number) => {
     setIndex(i);
@@ -31,6 +32,16 @@ export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselPr
   const next = useCallback(() => {
     goTo((index + 1) % slides.length);
   }, [index, slides.length, goTo]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(delta) > 50) {
+      delta < 0 ? next() : prev();
+    }
+  };
 
   useEffect(() => {
     timerRef.current = setInterval(() => {
@@ -49,7 +60,7 @@ export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselPr
   const current = slides[index];
 
   return (
-    <section className="relative aspect-[1/1] lg:h-screen overflow-hidden bg-black">
+    <section className="relative aspect-[1/1] lg:h-screen overflow-hidden bg-black" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
