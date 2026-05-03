@@ -5,12 +5,14 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    const isMobile = !window.matchMedia('(hover: hover)').matches;
+
     const lenis = new Lenis({
-      duration: 1.6,
-      easing: (t: number) => (t === 1 ? 1 : 1 - Math.pow(1 - t, 3)),
-      smoothWheel: true,
+      lerp: isMobile ? 0 : 0.08,
+      duration: isMobile ? 0 : 0.8,
+      smoothWheel: !isMobile,
       wheelMultiplier: 0.8,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1,
     });
 
     lenisRef.current = lenis;
