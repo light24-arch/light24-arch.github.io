@@ -13,9 +13,9 @@ role: "项目策划 · 方案设计 · 图纸绘制 · 视频制作 · 现场答
 order: 3
 hero: "/images/projects/project3/project3-1.jpg"
 images:
+  - "/images/projects/project3/project3-1.jpg"
   - "/images/projects/project3/project3-2.jpg"
   - "/images/projects/project3/project3-3.jpg"
-  - "/images/projects/project3/project3-4.jpg"
 closing_image: "/images/projects/project3/project3-7.jpg"
 features:
   - number: "01"
