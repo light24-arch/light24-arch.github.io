@@ -18,7 +18,9 @@ const artworks = allArtworks
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 4);
 
-const carouselSlides = projects.filter((p) => [2, 3, 5, 6].includes(p.data.order)).map((p) => ({
+// Hero 轮播精选：按 order 值指定展示项目
+const CAROUSEL_ORDERS = [2, 3, 5, 6];
+const carouselSlides = projects.filter((p) => CAROUSEL_ORDERS.includes(p.data.order)).map((p) => ({
   image: p.data.hero,
   title: p.data.title,
   href: `/projects/${p.slug}`,
