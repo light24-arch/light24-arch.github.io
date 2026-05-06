@@ -82,7 +82,7 @@ export default function ProjectCard({
   }, []);
 
   const total = images.length;
-  const showArrows = total > 1 && (hover || touchDevice);
+  const showArrows = total > 1;
 
   const shift = useCallback(
     (dir: 1 | -1) => (e?: React.MouseEvent) => {
@@ -139,12 +139,12 @@ export default function ProjectCard({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={cardSpring}
-                    className="absolute inset-0 -bottom-2 -right-2 rounded-sm shadow-md rotate-2 z-0 overflow-hidden"
+                    className="absolute inset-0 -bottom-2 -right-2 rounded-2xl shadow-md rotate-2 z-0 overflow-hidden"
                   >
                     <img
                       src={images[(index + 1) % total]}
                       alt=""
-                      className="w-full h-full object-cover opacity-40"
+                      className="w-full h-full object-cover opacity-40 transition-all duration-500 group-hover:brightness-105"
                       loading="lazy"
                     />
                   </motion.div>
@@ -154,12 +154,12 @@ export default function ProjectCard({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={cardSpring}
-                    className="absolute inset-0 -bottom-1.5 -right-1.5 rounded-sm shadow-md -rotate-2 z-[1] overflow-hidden"
+                    className="absolute inset-0 -bottom-1.5 -right-1.5 rounded-2xl shadow-md -rotate-2 z-[1] overflow-hidden"
                   >
                     <img
                       src={images[(index + 2) % total]}
                       alt=""
-                      className="w-full h-full object-cover opacity-50"
+                      className="w-full h-full object-cover opacity-50 transition-all duration-500 group-hover:brightness-105"
                       loading="lazy"
                     />
                   </motion.div>
@@ -167,7 +167,7 @@ export default function ProjectCard({
               </>
             )}
             {/* Main image */}
-            <div className={`relative overflow-hidden bg-[#F0F0F0] shadow-2xl transition-transform duration-700 group-hover:scale-[1.03] rounded-sm z-[2] w-full h-full`}>
+            <div className={`relative overflow-hidden bg-[#F0F0F0] shadow-card transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-card-hover rounded-2xl z-[2] w-full h-full`}>
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div
                   key={index}
@@ -181,7 +181,7 @@ export default function ProjectCard({
                   <img
                     src={images[index]}
                     alt={`${title} — ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-all duration-500 group-hover:brightness-105"
                     loading="lazy"
                     draggable={false}
                   />
@@ -201,7 +201,7 @@ export default function ProjectCard({
                 exit={{ opacity: 0, x: 8 }}
                 transition={{ duration: 0.2 }}
                 onClick={shift(-1)}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-sm text-black/80 hover:text-black hover:bg-white transition-colors shadow-sm"
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/70 backdrop-blur-xl border border-white/20 text-black/80 hover:text-black hover:bg-white/90 transition-all duration-300 shadow-sm"
                 aria-label="上一张"
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -214,7 +214,7 @@ export default function ProjectCard({
                 exit={{ opacity: 0, x: -8 }}
                 transition={{ duration: 0.2 }}
                 onClick={shift(1)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/85 backdrop-blur-sm text-black/80 hover:text-black hover:bg-white transition-colors shadow-sm"
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/70 backdrop-blur-xl border border-white/20 text-black/80 hover:text-black hover:bg-white/90 transition-all duration-300 shadow-sm"
                 aria-label="下一张"
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">

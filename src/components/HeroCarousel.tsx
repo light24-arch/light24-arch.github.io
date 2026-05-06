@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Slide {
@@ -14,15 +14,10 @@ interface HeroCarouselProps {
 
 export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselProps) {
   const [index, setIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const elapsedRef = useRef(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const touchStartX = useRef(0);
 
   const goTo = useCallback((i: number) => {
     setIndex(i);
-    setProgress(0);
-    elapsedRef.current = 0;
   }, []);
 
   const prev = useCallback(() => {
@@ -43,24 +38,10 @@ export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselPr
     }
   };
 
-  useEffect(() => {
-    timerRef.current = setInterval(() => {
-      elapsedRef.current += 50;
-      const pct = Math.min((elapsedRef.current / interval) * 100, 100);
-      setProgress(pct);
-      if (elapsedRef.current >= interval) {
-        elapsedRef.current = 0;
-        setProgress(0);
-        setIndex((prev) => (prev + 1) % slides.length);
-      }
-    }, 50);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [interval, slides.length]);
-
   const current = slides[index];
 
   return (
-    <section className="relative aspect-[1/1] lg:aspect-auto lg:h-screen overflow-hidden bg-black" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+    <section className="relative aspect-[1/1] lg:aspect-auto lg:h-screen overflow-hidden bg-black group" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
@@ -82,29 +63,25 @@ export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselPr
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
 
-      {/* Left / Right click zones */}
+      {/* Left / Right — frosted glass pill buttons */}
       <button
         onClick={prev}
-        className="absolute left-0 top-0 bottom-0 w-[15%] z-20 flex items-center justify-start pl-6 group cursor-[w-resize]"
+        className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-xl border border-white/10 text-white/70 hover:text-white hover:bg-white/25 transition-all duration-300 opacity-0 group-hover:opacity-100"
         aria-label="上一个项目"
       >
-        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white/80">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-            <path d="M15 5l-7 7 7 7" />
-          </svg>
-        </span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M15 5l-7 7 7 7" />
+        </svg>
       </button>
 
       <button
         onClick={next}
-        className="absolute right-0 top-0 bottom-0 w-[15%] z-20 flex items-center justify-end pr-6 group cursor-[e-resize]"
+        className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-xl border border-white/10 text-white/70 hover:text-white hover:bg-white/25 transition-all duration-300 opacity-0 group-hover:opacity-100"
         aria-label="下一个项目"
       >
-        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white/80">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-            <path d="M9 5l7 7-7 7" />
-          </svg>
-        </span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M9 5l7 7-7 7" />
+        </svg>
       </button>
 
       {/* Text */}
@@ -138,11 +115,17 @@ export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselPr
         </div>
       </div>
 
-      {/* Progress bar */}
+      {/* Progress bar — framer-motion animate instead of setInterval */}
       <div className="absolute bottom-0 left-0 right-0 z-20 h-[1px] bg-white/10">
         <motion.div
-          className="h-full bg-white/60"
-          style={{ width: `${progress}%` }}
+          key={index}
+          className="h-full bg-white/60 origin-left"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: interval / 1000, ease: 'linear' }}
+          onAnimationComplete={() => {
+            setIndex((prev) => (prev + 1) % slides.length);
+          }}
         />
       </div>
 

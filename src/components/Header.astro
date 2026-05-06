@@ -20,9 +20,10 @@ const nav = [
         <li>
           <a
             href={item.href}
-            class="text-base uppercase tracking-[0.15em] transition-colors duration-300"
+            class="text-base uppercase tracking-[0.15em] transition-colors duration-300 relative group/link"
           >
             {item.label}
+            <span class="absolute left-0 bottom-0 w-0 h-[1px] bg-current transition-all duration-300 group-hover/link:w-full"></span>
           </a>
         </li>
       ))}
@@ -34,13 +35,14 @@ const nav = [
   #site-header {
     color: white;
     background: transparent;
+    transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
   }
   #site-header.scrolled {
     color: #0A0A0A;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid #E5E5E5;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
   #site-header.scrolled a {
     color: #0A0A0A;
