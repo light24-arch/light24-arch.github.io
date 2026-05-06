@@ -67,7 +67,7 @@ export default function BentoGrid({ items }: BentoGridProps) {
   return (
     <>
       {/* Desktop: 16:9 container, 3-col grid fills entire box */}
-      <div className="hidden lg:grid grid-cols-3 gap-3 aspect-[16/9]">
+      <div className="hidden lg:grid grid-cols-3 gap-3 aspect-[16/9] overflow-hidden">
         {items.map((item, i) => (
           <div key={item.slug} className={getSpanClass(i)}>
             <BentoCard item={item} delay={i * 0.12} />
