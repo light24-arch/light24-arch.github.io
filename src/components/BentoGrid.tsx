@@ -16,10 +16,54 @@ interface BentoGridProps {
 
 const spring = { type: 'spring' as const, stiffness: 200, damping: 25, mass: 0.3 };
 
+function getSpan(index: number): { col: number; row: number } {
+  if (index === 0) return { col: 2, row: 2 };
+  if (index === 3 || (index > 3 && (index - 3) % 4 === 0)) return { col: 2, row: 1 };
+  return { col: 1, row: 1 };
+}
+
 function getSpanClass(index: number): string {
-  if (index === 0) return 'lg:col-span-2 lg:row-span-2';
-  if (index === 3 || (index > 3 && (index - 3) % 4 === 0)) return 'lg:col-span-2';
-  return '';
+  const { col, row } = getSpan(index);
+  const classes: string[] = [];
+  if (col === 2) classes.push('lg:col-span-2');
+  if (row === 2) classes.push('lg:row-span-2');
+  return classes.join(' ');
+}
+
+/** Simulate CSS Grid auto-placement to compute total rows for explicit track sizing */
+function computeRows(count: number): number {
+  const COLS = 3;
+  const grid: boolean[][] = []; // grid[r][c]
+  let maxR = 0;
+
+  const occupies = (r: number, c: number, rs: number, cs: number) => {
+    for (let dr = 0; dr < rs; dr++)
+      for (let dc = 0; dc < cs; dc++)
+        if (grid[r + dr]?.[c + dc]) return true;
+    return false;
+  };
+
+  const mark = (r: number, c: number, rs: number, cs: number) => {
+    for (let dr = 0; dr < rs; dr++) {
+      if (!grid[r + dr]) grid[r + dr] = [];
+      for (let dc = 0; dc < cs; dc++) grid[r + dr][c + dc] = true;
+    }
+  };
+
+  for (let i = 0; i < count; i++) {
+    const { col: cs, row: rs } = getSpan(i);
+    let placed = false;
+    for (let r = 0; !placed; r++) {
+      for (let c = 0; c <= COLS - cs && !placed; c++) {
+        if (!occupies(r, c, rs, cs)) {
+          mark(r, c, rs, cs);
+          maxR = Math.max(maxR, r + rs);
+          placed = true;
+        }
+      }
+    }
+  }
+  return maxR;
 }
 
 function BentoCard({ item, delay }: { item: BentoItem; delay: number }) {
@@ -66,8 +110,11 @@ export default function BentoGrid({ items }: BentoGridProps) {
 
   return (
     <>
-      {/* Desktop: 16:9 container, 3-col grid fills entire box */}
-      <div className="hidden lg:grid grid-cols-3 gap-3 aspect-[16/9] overflow-hidden">
+      {/* Desktop: 16:9 container, 3-col grid with explicit row tracks */}
+      <div
+        className="hidden lg:grid grid-cols-3 gap-3 aspect-[16/9] overflow-hidden"
+        style={{ gridTemplateRows: `repeat(${computeRows(items.length)}, 1fr)` }}
+      >
         {items.map((item, i) => (
           <div key={item.slug} className={getSpanClass(i)}>
             <BentoCard item={item} delay={i * 0.12} />
