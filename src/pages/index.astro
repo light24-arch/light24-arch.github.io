@@ -5,6 +5,7 @@ import HeroCarousel from '../components/HeroCarousel';
 import TextReveal from '../components/TextReveal';
 import FadeIn from '../components/FadeIn';
 import ProjectCard from '../components/ProjectCard';
+import BentoGrid from '../components/BentoGrid';
 import { categoryLabel, statusLabel } from '../utils/labels';
 
 const allProjects = await getCollection('projects');
@@ -17,6 +18,15 @@ const artworks = allArtworks
   .filter((a) => a.data.featured)
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 4);
+
+const bentoItems = artworks.map((art) => ({
+  title: art.data.title,
+  year: art.data.year,
+  medium: art.data.medium,
+  brief: art.data.brief,
+  hero: art.data.hero,
+  slug: art.slug,
+}));
 
 // Hero 轮播精选：按 order 值指定展示项目
 const CAROUSEL_ORDERS = [2, 3, 5, 6];
@@ -121,29 +131,7 @@ const carouselSlides = projects.filter((p) => CAROUSEL_ORDERS.includes(p.data.or
         text="建筑之外"
       />
 
-      <div class="flex overflow-x-auto lg:grid lg:grid-cols-4 gap-4 pb-4 snap-x snap-mandatory -mx-4 px-4">
-        {artworks.map((art, i) => (
-          <a
-            href={`/artwork/${art.slug}`}
-            class="group block flex-shrink-0 w-[65vw] lg:w-auto snap-start"
-          >
-            <FadeIn client:visible delay={i * 0.12}>
-              <div class="overflow-hidden aspect-[3/4] mb-4 shadow-2xl transition-transform duration-700 group-hover:scale-[1.03]">
-                <img
-                  src={art.data.hero}
-                  alt={art.data.title}
-                  class="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-              <p class="text-xl font-medium">{art.data.title}</p>
-              <p class="text-sm uppercase tracking-[0.15em] text-text-tertiary mt-1">
-                {art.data.medium}
-              </p>
-            </FadeIn>
-          </a>
-        ))}
-      </div>
+      <BentoGrid items={bentoItems} client:visible />
     </div>
   </section>
 
