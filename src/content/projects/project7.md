@@ -2,6 +2,7 @@
 title: "挂在厂房里的家"
 location: "徐州，江苏"
 year: 2025
+coordinates: [34.22, 117.30]
 category: "Residential"
 status: "Design"
 brief: '基于代际共居理念的厂房更新改造住区设计，以"悬挂式居住单元"回应工业遗产，形成"挂在厂房里的家"。'

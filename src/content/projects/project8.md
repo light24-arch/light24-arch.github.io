@@ -2,6 +2,7 @@
 title: "仙本那模块化海上酒店设计"
 location: "马来西亚，沙巴"
 year: 2026
+coordinates: [4.48, 118.62]
 category: "Hotel"
 status: "Design"
 brief: '基于模块化装配策略的海上酒店设计，回应仙本那独特的海洋生态环境与可持续旅游需求。'

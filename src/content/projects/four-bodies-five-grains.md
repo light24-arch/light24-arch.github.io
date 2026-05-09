@@ -2,6 +2,7 @@
 title: "四体勤，五谷分"
 location: "重庆"
 year: 2024
+coordinates: [29.56, 106.55]
 category: "Public"
 status: "Built"
 brief: '将废弃体育场改造为集运动与耕种于一体的特色公共空间，打造学生与社区的"第二课堂"。'

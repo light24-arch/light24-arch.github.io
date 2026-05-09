@@ -2,6 +2,7 @@
 title: "请回答 1958"
 location: "徐州，江苏"
 year: 2023
+coordinates: [34.20, 117.28]
 category: "Hotel"
 status: "Design"
 brief: '从"小院"到"大院"，回应场地中的工业遗存与过去的生活方式。'

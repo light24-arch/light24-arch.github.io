@@ -2,6 +2,7 @@
 title: "边界"
 location: "江苏苏州"
 year: 2023
+coordinates: [31.30, 120.62]
 category: "Museum"
 status: "Design"
 brief: '建筑回应历史与现代的边界，造型保留工业特色的同时呼应苏州城市肌理。'

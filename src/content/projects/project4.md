@@ -2,6 +2,7 @@
 title: "粮兴布盛处，潮起潮落时"
 location: "徐州，江苏"
 year: 2024
+coordinates: [34.21, 117.29]
 category: "Public"
 status: "Design"
 brief: '基于图底关系理论，以"粮兴布盛"为愿景，提出可变的街道更新策略应对人流潮汐。'

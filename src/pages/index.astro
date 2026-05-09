@@ -6,6 +6,7 @@ import TextReveal from '../components/TextReveal';
 import FadeIn from '../components/FadeIn';
 import ProjectCard from '../components/ProjectCard';
 import ArtworkCard from '../components/ArtworkCard';
+import ProjectMap from '../components/ProjectMap';
 import { categoryLabel, statusLabel } from '../utils/labels';
 
 const allProjects = await getCollection('projects');
@@ -26,6 +27,18 @@ const carouselSlides = projects.filter((p) => CAROUSEL_ORDERS.includes(p.data.or
   title: p.data.title,
   href: `/projects/${p.slug}`,
 }));
+
+// 项目地图数据
+const mapProjects = allProjects
+  .filter((p) => p.data.coordinates != null)
+  .map((p) => ({
+    slug: p.slug,
+    title: p.data.title,
+    location: p.data.location,
+    year: p.data.year,
+    hero: p.data.hero,
+    coordinates: p.data.coordinates!,
+  }));
 
 ---
 
@@ -68,6 +81,28 @@ const carouselSlides = projects.filter((p) => CAROUSEL_ORDERS.includes(p.data.or
         </div>
       </FadeIn>
     </div>
+  </section>
+
+  <!-- ═══════════════ PROJECT MAP — 作品地图卡片 ═══════════════ -->
+  <section class="px-8 lg:px-12 pb-40 lg:pb-56 max-w-[1440px] mx-auto">
+    <FadeIn client:visible>
+      <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-text-tertiary mb-6">
+        Project Map
+      </p>
+    </FadeIn>
+    <TextReveal
+      as="h2"
+      className="text-3xl lg:text-5xl font-medium tracking-[-0.02em] max-w-3xl mb-10"
+      stagger={0.04}
+      client:visible
+      text="项目地图"
+    />
+
+    <div class="w-full h-[60vh] lg:h-[70vh]">
+      <ProjectMap projects={mapProjects} client:only="react" />
+    </div>
+
+    <p class="text-xs text-text-tertiary mt-4 text-right">滚动缩放 · 点击标记查看项目详情</p>
   </section>
 
   <!-- ═══════════════ SELECTED WORKS — 大幅间距·画册呼吸感 ═══════════════ -->

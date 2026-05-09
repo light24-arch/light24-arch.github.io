@@ -2,6 +2,7 @@
 title: "我在公园逛商场"
 location: "徐州，江苏"
 year: 2025
+coordinates: [34.19, 117.27]
 category: "Mixed-Use"
 status: "Design"
 brief: '基于POD模式，将单一商业综合体升级为多元融合的市民公园，打造介于城市商业与自然绿地的"第三空间"。'

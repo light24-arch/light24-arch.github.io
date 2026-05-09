@@ -6,6 +6,7 @@ const projects = defineCollection({
     title: z.string(),
     location: z.string(),
     year: z.number(),
+    coordinates: z.tuple([z.number(), z.number()]).optional(),
     category: z.enum(['Residential', 'Cultural', 'Commercial', 'Public', 'Hotel', 'Museum', 'Mixed-Use', 'Masterplan', 'Concept']),
     status: z.enum(['Built', 'In Progress', 'Competition', 'Concept', 'Design']),
     brief: z.string(),

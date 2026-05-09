@@ -218,3 +218,33 @@ body::after {
   background-color: #E5E5E5;
   width: 100%;
 }
+
+/* ── Leaflet Map: Custom Marker ── */
+.custom-circle-marker {
+  background: transparent !important;
+  border: none !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.custom-circle-marker:hover {
+  transform: scale(1.4);
+}
+
+/* ── Leaflet Map: Popup Overrides (aggressive reset) ── */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: max-content !important;
+}
+.leaflet-popup {
+  overflow: visible !important;
+}
+
+/* ── Leaflet Map: Grayscale tiles for stronger B&W feel ── */
+.leaflet-tile {
+  filter: grayscale(0.3) brightness(1.05);
+}
