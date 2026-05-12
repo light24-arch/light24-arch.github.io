@@ -303,6 +303,9 @@ export default function ProjectMap({ projects }: ProjectMapProps) {
       <MapContainer
         center={[32, 110]}
         zoom={5}
+        minZoom={2}
+        maxBounds={[[-90, -180], [90, 180]]}
+        maxBoundsViscosity={1.0}
         scrollWheelZoom
         zoomControl={false}
         attributionControl={false}
@@ -311,6 +314,7 @@ export default function ProjectMap({ projects }: ProjectMapProps) {
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+          noWrap={true}
         />
 
         <FitBounds coordinates={uniqueCoords} />

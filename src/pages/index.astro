@@ -5,9 +5,11 @@ import HeroCarousel from '../components/HeroCarousel';
 import TextReveal from '../components/TextReveal';
 import FadeIn from '../components/FadeIn';
 import ProjectCard from '../components/ProjectCard';
-import ArtworkCard from '../components/ArtworkCard';
+import OtherWorksFanOut from '../components/OtherWorksFanOut';
 import ProjectMap from '../components/ProjectMap';
+import AwardsBento from '../components/AwardsBento.astro';
 import { categoryLabel, statusLabel } from '../utils/labels';
+import { parseArtworkItems } from '../utils/schema';
 
 const allProjects = await getCollection('projects');
 const projects = allProjects
@@ -19,6 +21,16 @@ const artworks = allArtworks
   .filter((a) => a.data.featured)
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 4);
+
+const fanOutItems = parseArtworkItems(
+  artworks.map((art) => ({
+    title: art.data.title,
+    hero: art.data.hero,
+    medium: art.data.medium,
+    year: art.data.year,
+    slug: art.slug,
+  })),
+);
 
 // Hero 轮播精选：按 order 值指定展示项目
 const CAROUSEL_ORDERS = [2, 3, 5, 6];
@@ -105,16 +117,41 @@ const mapProjects = allProjects
     <p class="text-xs text-text-tertiary mt-4 text-right">滚动缩放 · 点击标记查看项目详情</p>
   </section>
 
+  <!-- ═══════════════ AWARDS — 学科竞赛荣誉 ═══════════════ -->
+  <section class="px-8 lg:px-12 pb-40 lg:pb-56 max-w-[1440px] mx-auto">
+    <FadeIn client:visible>
+      <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-text-tertiary mb-6">
+        Awards & Honors
+      </p>
+    </FadeIn>
+    <TextReveal
+      as="h2"
+      className="text-3xl lg:text-5xl font-medium tracking-[-0.02em] max-w-3xl mb-10"
+      stagger={0.04}
+      client:visible
+      text="学科竞赛"
+    />
+    <AwardsBento />
+  </section>
+
   <!-- ═══════════════ SELECTED WORKS — 大幅间距·画册呼吸感 ═══════════════ -->
   <section class="px-8 lg:px-12 pb-48 lg:pb-64 max-w-[1440px] mx-auto">
     <FadeIn client:visible>
       <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-text-tertiary mb-6">
         Selected Works
       </p>
-      <p class="text-sm text-text-secondary mb-20 leading-relaxed max-w-xl">
+      <p class="text-sm text-text-secondary mb-16 leading-relaxed max-w-xl">
         以下为近年完成的代表性建筑项目。每个项目都代表了对特定场地、文化与建造条件的独立回应。
       </p>
     </FadeIn>
+
+    <TextReveal
+      as="h2"
+      className="text-3xl lg:text-5xl font-medium tracking-[-0.02em] max-w-3xl mb-12"
+      stagger={0.04}
+      client:visible
+      text="建筑设计"
+    />
 
     <div>
       {
@@ -141,8 +178,8 @@ const mapProjects = allProjects
   </section>
 
   <!-- ═══════════════ ARTWORK ═══════════════ -->
-  <section id="otherworks" class="border-t border-border px-8 lg:px-12 py-40 lg:py-56">
-    <div class="max-w-[1440px] mx-auto">
+  <section id="otherworks" class="border-t border-border pt-40 lg:pt-56">
+    <div class="max-w-[1440px] mx-auto px-8 lg:px-12">
       <FadeIn client:visible>
         <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-text-tertiary mb-6">
           otherworks
@@ -157,22 +194,9 @@ const mapProjects = allProjects
         text="建筑之外"
       />
 
-      <div class="flex overflow-x-auto lg:grid lg:grid-cols-4 gap-4 lg:gap-6 pb-4 snap-x snap-mandatory -mx-4 px-4">
-        {artworks.map((art, i) => (
-          <div class="flex-shrink-0 w-[65vw] lg:w-auto snap-start">
-            <ArtworkCard
-              hero={art.data.hero}
-              title={art.data.title}
-              medium={art.data.medium}
-              year={art.data.year}
-              slug={art.slug}
-              delay={i * 0.12}
-              client:visible
-            />
-          </div>
-        ))}
-      </div>
     </div>
+
+    <OtherWorksFanOut items={fanOutItems} client:only="react" />
   </section>
 
 </Base>

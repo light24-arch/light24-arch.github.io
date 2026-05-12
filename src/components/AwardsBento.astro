@@ -1,0 +1,273 @@
+---
+interface Award {
+  id: number;
+  year: string;
+  title: string;
+  subtitle: string;
+  level: string;
+  project: string;
+  role: string;
+  variant: 'hero' | 'wide' | 'tall' | 'small';
+  /** Card background colour from arch palette */
+  bg: string;
+  /** Overlay bg (glass curtain) */
+  curtainBg: string;
+  /** Overlay text colour */
+  curtainText: string;
+  /** Overlay muted colour */
+  curtainMuted: string;
+  /** Badge bg for hero overlay */
+  badgeBg: string;
+  /** Link to project/artwork detail page */
+  link?: string;
+  /** Competition image (B&W → color on hover) */
+  img?: string;
+}
+
+const awards: Award[] = [
+  /* 1 — 紫金奖 (hero) — light bg → project3 (四体勤五谷分) */
+  {
+    id: 1, year: '2024', title: '紫金奖', subtitle: '建筑及环境设计大赛',
+    level: '一等奖 / 决赛铜奖', project: '《四体勤，五谷分》重庆市江陵机械厂体育场更新',
+    role: '调研 · 方案设计 · 制图 · 视频制作 · 答辩',
+    variant: 'hero', bg: 'bg-arch-1',
+    curtainBg: 'bg-arch-4', curtainText: 'text-arch-0', curtainMuted: 'text-arch-1',
+    badgeBg: 'bg-arch-0/10',
+    link: '/projects/four-bodies-five-grains',
+    img: '/images/competition/紫金奖.png',
+  },
+  /* 2 — 东南新人赛 23 (wide) — white bg → project1 (请回答1958) */
+  {
+    id: 2, year: '2023', title: '东南新人赛', subtitle: '',
+    level: 'Top 100（三等奖）', project: '《请回答 1958》本科二年级课程设计',
+    role: '独立完成',
+    variant: 'wide', bg: 'bg-arch-0',
+    curtainBg: 'bg-arch-4', curtainText: 'text-arch-0', curtainMuted: 'text-arch-2',
+    badgeBg: '',
+    link: '/projects/please-answer-1958',
+    img: '/images/competition/新人赛2023.png',
+  },
+  /* 6 — 实体建构大赛 (wide, top-right) — dark bg */
+  {
+    id: 6, year: '2023', title: '实体建构大赛', subtitle: '第十届海峡两岸大学生',
+    level: '优秀奖', project: '《蔓·延》实体建构项目',
+    role: '组长 · 方案设计 · 制图 · 模型制作 · 实体搭建',
+    variant: 'wide', bg: 'bg-arch-4',
+    curtainBg: 'bg-arch-0', curtainText: 'text-arch-4', curtainMuted: 'text-arch-3',
+    badgeBg: '',
+    img: '/images/competition/实体建构.png',
+  },
+  /* 4 — 人居环境 (tall) — deepest bg → other1 (场所育人) */
+  {
+    id: 4, year: '2024', title: '中国人居<br>环境学年奖', subtitle: '',
+    level: '优秀奖', project: '《场所育人》建筑系公共空间氛围营造',
+    role: '组长 · 调研 · 方案设计 · 制图',
+    variant: 'tall', bg: 'bg-arch-4',
+    curtainBg: 'bg-arch-0', curtainText: 'text-arch-4', curtainMuted: 'text-arch-3',
+    badgeBg: '',
+    link: '/artwork/parasitic-furniture',
+    img: '/images/competition/人居环境.png',
+  },
+  /* 5 — 松阳 (tall) — white bg */
+  {
+    id: 5, year: '2023', title: '松阳<br>乡村振兴<br>设计大赛', subtitle: '',
+    level: '入围奖', project: '《溪上雅集·古埠新弹》松阳县村民之家改造',
+    role: '组长 · 调研 · 方案设计 · 制图',
+    variant: 'tall', bg: 'bg-arch-0',
+    curtainBg: 'bg-arch-4', curtainText: 'text-arch-0', curtainMuted: 'text-arch-2',
+    badgeBg: '',
+    img: '/images/competition/松阳乡村振兴.png',
+  },
+  /* 3 — 东南新人赛 24 (hero, bottom-right) — light bg → project2 (边界) */
+  {
+    id: 3, year: '2024', title: '东南新人赛', subtitle: '',
+    level: 'Top 100（三等奖）', project: '《边界》苏州民族乐器博物馆改扩建设计',
+    role: '独立完成',
+    variant: 'hero', bg: 'bg-arch-1',
+    curtainBg: 'bg-arch-4', curtainText: 'text-arch-0', curtainMuted: 'text-arch-1',
+    badgeBg: 'bg-arch-0/10',
+    link: '/projects/project2',
+    img: '/images/competition/新人赛2024.png',
+  },
+  /* 7 — 传统村落 (small) — light bg */
+  {
+    id: 7, year: '2024', title: '江苏传统<br>村落工作营', subtitle: '',
+    level: '优秀调查奖', project: '《凤飞鱼跃》兴化沙沟地域传统建造乡土调查',
+    role: '组长 · 调研 · 方案 · 制图 · 模型 · 搭建',
+    variant: 'small', bg: 'bg-arch-0',
+    curtainBg: 'bg-arch-4', curtainText: 'text-arch-0', curtainMuted: 'text-arch-1',
+    badgeBg: '',
+  },
+  /* 8 — 乡村规划 (small) — dark bg */
+  {
+    id: 8, year: '2024', title: '乡村规划<br>方案竞赛', subtitle: '',
+    level: '佳作奖', project: '《沙沟"涟"韵，古村联新》兴化沙沟镇传统建造研究',
+    role: '调研 · 制图 · 报告撰写',
+    variant: 'small', bg: 'bg-arch-4',
+    curtainBg: 'bg-arch-0', curtainText: 'text-arch-4', curtainMuted: 'text-arch-3',
+    badgeBg: '',
+  },
+];
+
+/* ── Grid span ── */
+function gridSpan(v: Award['variant']): string {
+  switch (v) {
+    case 'hero':  return 'md:col-span-2 md:row-span-2';
+    case 'wide':  return 'md:col-span-2 md:row-span-1';
+    case 'tall':  return 'md:col-span-1 md:row-span-2';
+    case 'small': return 'md:col-span-1 md:row-span-1';
+  }
+}
+
+/* ── Front-face label colour by bg ── */
+function labelColor(bg: string): string {
+  return bg === 'bg-arch-4' ? 'text-arch-1/70' : 'text-arch-3/80';
+}
+
+/* ── Front title colour by bg ── */
+function titleColor(bg: string): string {
+  return bg === 'bg-arch-4' ? 'text-arch-0' : 'text-arch-4';
+}
+
+/* ── Architecture side-label colour ── */
+function sideLabelColor(bg: string): string {
+  return bg === 'bg-arch-4' ? 'text-arch-1/50' : 'text-arch-3/40';
+}
+---
+
+<div class="w-full max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-6 grid-rows-none md:grid-rows-3 gap-3 md:gap-5 auto-rows-[260px] md:auto-rows-[1fr] md:aspect-[2/1]">
+  {
+    awards.map((a, i) => {
+      const hasImg = !!a.img;
+      const cardClasses = `group/card relative overflow-hidden ${a.bg} rounded-[2rem] transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] shadow-md border border-arch-2/15 flex flex-col justify-between ${hasImg ? '' : 'p-5 md:p-7'} ${gridSpan(a.variant)}`;
+      const inner = (
+        <>
+          {/* ── Mobile tap toggle (hidden on desktop) ── */}
+          <input type="checkbox" class="peer/tap absolute inset-0 z-30 opacity-0 cursor-pointer md:hidden" />
+
+          {/* ══════ B&W image at card level (outside padded front-face) ══════ */}
+          {hasImg && (
+            <>
+              <img src={a.img} alt={a.title} class="absolute inset-0 w-full h-full object-cover grayscale" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+            </>
+          )}
+
+          {/* ── Front face ── */}
+          <div class={`relative z-10 h-full flex flex-col justify-between peer-checked/tap:opacity-0 transition-opacity duration-400 ${hasImg ? 'p-4 md:p-5' : ''}`}>
+            {a.img ? (
+              /* Text with blur backdrop for image cards */
+              <div class="mt-auto p-3">
+                <p class="text-white/70 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">{a.year}</p>
+                {a.variant === 'hero' ? (
+                  <div>
+                    {a.subtitle ? <p class="text-white/60 text-xs font-bold tracking-widest uppercase mb-1">{a.subtitle}</p> : null}
+                    <h2 class="text-2xl lg:text-4xl font-black tracking-tighter leading-none text-white">{a.title}</h2>
+                  </div>
+                ) : a.variant === 'wide' ? (
+                  <h2 class="text-xl lg:text-2xl font-black tracking-tight leading-none text-white">{a.title}</h2>
+                ) : (
+                  <h2 class="text-lg leading-none font-black tracking-tight text-white" set:html={a.title} />
+                )}
+              </div>
+            ) : (
+              <>
+                <p class={`text-[10px] font-bold tracking-[0.2em] uppercase ${labelColor(a.bg)}`}>{a.year}</p>
+                {
+                  a.variant === 'hero' ? (
+                    <div>
+                      {a.subtitle ? <p class={`text-xs font-bold tracking-widest uppercase mb-2 ${labelColor(a.bg)}`}>{a.subtitle}</p> : null}
+                      <h2 class={`text-4xl lg:text-6xl font-black tracking-tighter leading-none ${titleColor(a.bg)}`}>{a.title}</h2>
+                    </div>
+                  ) : a.variant === 'wide' ? (
+                    <div class="flex justify-between items-end w-full">
+                      <h2 class={`text-2xl lg:text-3xl font-black tracking-tight leading-none ${titleColor(a.bg)}`}>{a.title}</h2>
+                      <span class={`text-sm font-bold uppercase tracking-widest ${sideLabelColor(a.bg)}`}>Architecture</span>
+                    </div>
+                  ) : (
+                    <h2 class={`text-2xl leading-none font-black tracking-tight ${titleColor(a.bg)}`} set:html={a.title} />
+                  )
+                }
+              </>
+            )}
+          </div>
+
+          {/* ── Curtain overlay (color image slides up from bottom) ── */}
+          <div
+            class={`absolute inset-0 z-20 translate-y-full group-hover/card:translate-y-0 peer-checked/tap:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]`}
+          >
+            {a.img ? (
+              <>
+                {/* Color image (no grayscale) */}
+                <img src={a.img} alt={a.title} class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20 backdrop-blur-[2px]" />
+                <div class="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                  {a.variant === 'hero' ? (
+                    <>
+                      <span class={`inline-block px-3 py-1 ${a.badgeBg} text-arch-0 text-[10px] font-bold uppercase tracking-widest rounded-full w-max mb-4`}>{a.level}</span>
+                      <h3 class="text-white text-xl lg:text-2xl font-bold leading-tight mb-4">{a.project}</h3>
+                      <div class="w-full h-[1px] bg-white/20 mb-4"></div>
+                      <p class="text-white/70 text-sm font-light">负责：{a.role}</p>
+                    </>
+                  ) : a.variant === 'wide' ? (
+                    <>
+                      <span class="text-white/60 text-[10px] font-bold tracking-widest uppercase mb-1">{a.level}</span>
+                      <h3 class="text-white text-lg font-bold leading-tight">{a.project}</h3>
+                      {a.id === 6 ? <p class="text-white/70 text-xs font-light mt-2">{a.role}</p> : null}
+                    </>
+                  ) : a.variant === 'tall' ? (
+                    <>
+                      <span class="text-white/60 text-[10px] font-bold tracking-widest uppercase mb-2">{a.level}</span>
+                      <h3 class="text-white text-sm font-bold leading-snug mb-4">{a.project}</h3>
+                      <p class="text-white/70 text-xs font-light">{a.role}</p>
+                    </>
+                  ) : (
+                    <>
+                      <span class="text-white/60 text-[9px] font-bold tracking-widest uppercase mb-1">{a.level}</span>
+                      <h3 class="text-white text-[11px] font-bold leading-tight mb-2 line-clamp-3">{a.project}</h3>
+                      <p class="text-white/70 text-[9px]">{a.role}</p>
+                    </>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div class={`absolute inset-0 ${a.curtainBg} p-5 md:p-7 flex flex-col justify-end`}>
+                {a.variant === 'hero' ? (
+                  <>
+                    <span class={`inline-block px-3 py-1 ${a.badgeBg} text-arch-0 text-[10px] font-bold uppercase tracking-widest rounded-full w-max mb-4`}>{a.level}</span>
+                    <h3 class={`${a.curtainText} text-xl lg:text-2xl font-bold leading-tight mb-4`}>{a.project}</h3>
+                    <div class="w-full h-[1px] bg-arch-0/15 mb-4"></div>
+                    <p class={`${a.curtainMuted} text-sm font-light`}>负责：{a.role}</p>
+                  </>
+                ) : a.variant === 'wide' ? (
+                  <>
+                    <span class={`${a.curtainMuted} text-[10px] font-bold tracking-widest uppercase mb-1`}>{a.level}</span>
+                    <h3 class={`${a.curtainText} text-lg font-bold leading-tight`}>{a.project}</h3>
+                    {a.id === 6 ? <p class={`${a.curtainMuted} text-xs font-light mt-2`}>{a.role}</p> : null}
+                  </>
+                ) : a.variant === 'tall' ? (
+                  <>
+                    <span class={`${a.curtainMuted} text-[10px] font-bold tracking-widest uppercase mb-2`}>{a.level}</span>
+                    <h3 class={`${a.curtainText} text-sm font-bold leading-snug mb-4`}>{a.project}</h3>
+                    <p class={`${a.curtainMuted} text-xs font-light`}>{a.role}</p>
+                  </>
+                ) : (
+                  <>
+                    <span class={`${a.curtainMuted} text-[9px] font-bold tracking-widest uppercase mb-1`}>{a.level}</span>
+                    <h3 class={`${a.curtainText} text-[11px] font-bold leading-tight mb-2 line-clamp-3`}>{a.project}</h3>
+                    <p class={`${a.curtainMuted} text-[9px]`}>{a.role}</p>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+      </>
+    );
+    return a.link ? (
+      <a href={a.link} class={cardClasses}>{inner}</a>
+    ) : (
+      <div class={cardClasses}>{inner}</div>
+    );
+  })}
+</div>
+

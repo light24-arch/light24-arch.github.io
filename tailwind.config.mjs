@@ -15,6 +15,13 @@ export default {
         'text-secondary': '#737373',
         'text-tertiary': '#A3A3A3',
         accent: '#1A1A1A',
+        arch: {
+          0: '#FFFFFF',
+          1: '#E4E4E4',
+          2: '#B6B6B6',
+          3: '#8C8C8C',
+          4: '#585858',
+        },
       },
       spacing: {
         '18': '4.5rem',

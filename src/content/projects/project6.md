@@ -2,6 +2,7 @@
 title: "MARS PLANT"
 location: "火星"
 year: 2025
+video: "/images/projects/project6/视频.mp4"
 category: "Concept"
 status: "Design"
 brief: '基于模块化舱体系统的火星采矿基地设计，以可生长、自循环的空间逻辑回应地外极端环境。'

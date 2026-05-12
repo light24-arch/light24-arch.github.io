@@ -5,7 +5,7 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   site: 'https://light24-arch.github.io',
   base: '/',
-  integrations: [react(), tailwind()],
+  integrations: [react({ jsxImportSource: 'react' }), tailwind()],
   output: 'static',
   experimental: {
     contentIntellisense: true,

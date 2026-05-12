@@ -15,6 +15,7 @@ const projects = defineCollection({
     area: z.string().optional(),
     team: z.string().optional(),
     role: z.string().optional(),
+    video: z.string().optional(),
     hero: z.string(),
     images: z.array(z.string()).default([]),
     closing_image: z.string().optional(),
