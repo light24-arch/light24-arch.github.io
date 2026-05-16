@@ -212,6 +212,12 @@ body::after {
   }
 }
 
+/* ── About TOC mask ── */
+.mask-vertical-fade {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+}
+
 /* ── 极简细线 ── */
 .hairline {
   height: 1px;

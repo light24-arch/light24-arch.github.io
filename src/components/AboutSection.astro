@@ -1,0 +1,55 @@
+---
+import TextReveal from './TextReveal';
+import FadeIn from './FadeIn';
+import AboutSidebarMenu from './AboutSidebarMenu';
+
+const SECTIONS = [
+  { id: 'project-map', title: '项目地图' },
+  { id: 'awards', title: '学科竞赛' },
+  { id: 'works', title: '建筑设计' },
+  { id: 'otherworks', title: '建筑之外' },
+  { id: 'contact', title: '联系' },
+];
+---
+
+<section id="about" class="max-w-[1440px] mx-auto px-8 lg:px-12 py-40 lg:py-56">
+  <div class="flex relative">
+    <!-- ══════ 左侧：关于我文字内容 ══════ -->
+    <div class="w-full md:w-2/3">
+      <TextReveal
+        as="p"
+        className="text-xl lg:text-3xl font-medium leading-relaxed tracking-[-0.01em] text-text-primary"
+        stagger={0.04}
+        delay={0.2}
+        client:visible
+        text={`建筑不仅是空间的载体，更是人与人、人与社区、\n人与自然之间连接的纽带。`}
+      />
+
+      <FadeIn client:visible delay={0.6}>
+        <div class="mt-16 space-y-5 text-sm text-text-secondary leading-relaxed max-w-xl">
+          <p>
+            在城市中长大的过程中，电视机与父母口中的"邻里关系"似乎已经消失不见。
+            住宅作为我们停留时间最长的空间，却阻隔了人与人之间交流的机会。
+            而在 AI 浪潮席卷的今天，获取信息的渠道无限扩展，人与人之间的距离被无限拉近，又被无限推远。
+          </p>
+          <p>
+            即使在未来，对实体空间的讨论或许已无意义。但在可预见的当下，建筑依旧是物质空间的重要载体，
+            是生产生活的基本空间。后疫情时代，我们逐渐意识到面对面互动的无可替代性——
+            建筑作为这一功能的重要载体，自然有着"以人为本"的根本设计需求。
+          </p>
+          <p>
+            回顾本科至今的建筑学习生涯，我常以"生活方式"为切入点，以人们对生活的需求为设计首要考虑，
+            建筑成为我对未来生活方式想象的投射。这本作品集，是我对建筑，也是对生活方式的思考。
+          </p>
+        </div>
+      </FadeIn>
+    </div>
+
+    <!-- ══════ 右侧：页面导航 TOC ══════ -->
+    <div class="hidden md:block w-1/3 relative">
+      <div class="absolute top-0 right-0 flex items-start justify-end">
+        <AboutSidebarMenu sections={SECTIONS} client:load />
+      </div>
+    </div>
+  </div>
+</section>
