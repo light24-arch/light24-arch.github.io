@@ -251,6 +251,6 @@ body::after {
 }
 
 /* ── Leaflet Map: Grayscale tiles for stronger B&W feel ── */
-.leaflet-tile {
-  filter: grayscale(0.3) brightness(1.05);
+.project-map .leaflet-tile {
+  filter: grayscale(1) brightness(1.05);
 }
