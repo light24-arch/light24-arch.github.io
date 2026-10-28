@@ -1,4 +1,5 @@
 ---
+import ResponsiveImage from '../components/ResponsiveImage.astro';
 interface Award {
   id: number;
   year: string;
@@ -146,9 +147,9 @@ function sideLabelColor(bg: string): string {
           <input type="checkbox" class="peer/tap absolute inset-0 z-30 opacity-0 cursor-pointer md:hidden" />
 
           {/* ══════ B&W image at card level (outside padded front-face) ══════ */}
-          {hasImg && (
+          {a.img && (
             <>
-              <img src={a.img} alt={a.title} class="absolute inset-0 w-full h-full object-cover grayscale" loading="lazy" />
+              <ResponsiveImage src={a.img} alt={a.title} class="absolute inset-0 w-full h-full object-cover grayscale" loading="lazy" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
             </>
           )}
@@ -199,7 +200,7 @@ function sideLabelColor(bg: string): string {
             {a.img ? (
               <>
                 {/* Color image (no grayscale) */}
-                <img src={a.img} alt={a.title} class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                <ResponsiveImage src={a.img} alt={a.title} class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20 backdrop-blur-[2px]" />
                 <div class="absolute inset-x-0 bottom-0 p-4 md:p-5">
                   {a.variant === 'hero' ? (

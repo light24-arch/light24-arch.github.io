@@ -1,0 +1,10 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { responsiveImage } from '../utils/images';
+
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'alt'> { src: string; alt: string; }
+const { src, alt, sizes = '100vw', loading = 'lazy', ...props } = Astro.props;
+const { srcSet, ...image } = responsiveImage(src);
+---
+
+<img {...image} {...props} srcset={srcSet} alt={alt} sizes={sizes} loading={loading} decoding="async" />

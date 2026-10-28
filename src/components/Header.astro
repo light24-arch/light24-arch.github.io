@@ -62,10 +62,15 @@ const nav = [
 </style>
 
 <script>
-  const header = document.getElementById('site-header');
-  const onScroll = () => {
-    header.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.4);
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  function updateHeader() {
+    const header = document.getElementById('site-header');
+    const isDetail = window.location.pathname !== '/';
+    header?.classList.toggle('scrolled', isDetail || window.scrollY > window.innerHeight * 0.4);
+  }
+
+  // One document-lifetime listener reads the current node after every route swap.
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  document.addEventListener('astro:after-swap', updateHeader);
+  document.addEventListener('astro:page-load', updateHeader);
+  updateHeader();
 </script>

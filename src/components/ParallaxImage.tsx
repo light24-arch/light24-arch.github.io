@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
@@ -27,7 +28,7 @@ export default function ParallaxImage({
   return (
     <div ref={ref} className={`overflow-hidden ${containerClassName}`}>
       <motion.div style={{ y }} className="h-[120%] -top-[10%] relative">
-        <img
+        <ResponsiveImage
           src={src}
           alt={alt}
           className={`w-full h-full object-cover ${className}`}

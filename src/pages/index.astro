@@ -29,7 +29,7 @@ const fanOutItems = parseArtworkItems(
     hero: art.data.hero,
     medium: art.data.medium,
     year: art.data.year,
-    slug: art.slug,
+    slug: art.id,
   })),
 );
 
@@ -38,14 +38,14 @@ const CAROUSEL_ORDERS = [2, 3, 5, 6];
 const carouselSlides = projects.filter((p) => CAROUSEL_ORDERS.includes(p.data.order)).map((p) => ({
   image: p.data.hero,
   title: p.data.title,
-  href: `/projects/${p.slug}`,
+  href: `/projects/${p.id}`,
 }));
 
 // 项目地图数据
 const mapProjects = allProjects
   .filter((p) => p.data.coordinates != null)
   .map((p) => ({
-    slug: p.slug,
+    slug: p.id,
     title: p.data.title,
     location: p.data.location,
     year: p.data.year,
@@ -130,7 +130,7 @@ const mapProjects = allProjects
           <section class="mb-[100px] lg:mb-[280px] last:mb-0">
             <ProjectCard
               images={project.data.images}
-              slug={project.slug}
+              slug={project.id}
               category={`${categoryLabel[project.data.category] || project.data.category} · ${project.data.location}`}
               title={project.data.title}
               year={project.data.year}

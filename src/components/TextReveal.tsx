@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, type Variants } from 'framer-motion';
 
 interface TextRevealProps {
   text: string;
@@ -34,7 +34,7 @@ export default function TextReveal({
     },
   };
 
-  const child = {
+  const child: Variants = {
     hidden: { y: '120%', rotate: 4 },
     visible: {
       y: '0%',

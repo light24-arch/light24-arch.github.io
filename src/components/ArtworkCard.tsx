@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage';
 import { useRef, useState } from 'react';
 import FadeIn from './FadeIn';
 
@@ -39,7 +40,7 @@ export default function ArtworkCard({ hero, title, medium, year, slug, delay }: 
           }}
         >
           <div className="overflow-hidden aspect-[3/4] mb-4 rounded-2xl shadow-card transition-shadow duration-500 group-hover:shadow-card-hover">
-            <img
+            <ResponsiveImage
               src={hero}
               alt={title}
               className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-105"

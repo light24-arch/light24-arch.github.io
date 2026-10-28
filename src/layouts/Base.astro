@@ -1,9 +1,10 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import LenisProvider from '../components/LenisProvider';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { responsiveImage } from '../utils/images';
 
 interface Props {
   title: string;
@@ -13,6 +14,7 @@ interface Props {
 
 const { title, description, image } = Astro.props;
 const fullTitle = `${title} — XUJINGYI`;
+const shareImage = image ? new URL(responsiveImage(image).src, Astro.site).href : undefined;
 ---
 
 <!doctype html>
@@ -24,13 +26,13 @@ const fullTitle = `${title} — XUJINGYI`;
 
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description || '建筑·空间·跨界创作的个人作品集。'} />
-    {image && <meta property="og:image" content={image} />}
+    {shareImage && <meta property="og:image" content={shareImage} />}
     <meta property="og:type" content="website" />
 
     <title>{fullTitle}</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body class="bg-background text-text-primary antialiased">
     <LenisProvider client:load>

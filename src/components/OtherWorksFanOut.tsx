@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage';
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
 
@@ -51,7 +52,7 @@ export default function OtherWorksFanOut({ items }: OtherWorksFanOutProps) {
                   className="group/card block w-[260px] h-[360px] rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.2)] hover:-translate-y-4 transition-all duration-500 cursor-pointer bg-white border border-stone-100 isolate"
                 >
                   <div className="w-full h-full relative overflow-hidden">
-                    <img
+                    <ResponsiveImage sizes="(min-width: 768px) 260px, 100vw"
                       src={item.hero}
                       alt={item.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
@@ -87,7 +88,7 @@ export default function OtherWorksFanOut({ items }: OtherWorksFanOutProps) {
             className={`group block rounded-2xl overflow-hidden shadow-md ${i === 0 ? 'col-span-2 aspect-[16/9]' : 'aspect-[3/4]'}`}
           >
             <div className="relative w-full h-full overflow-hidden">
-              <img
+              <ResponsiveImage sizes="(min-width: 768px) 260px, 100vw"
                 src={item.hero}
                 alt={item.title}
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-105"

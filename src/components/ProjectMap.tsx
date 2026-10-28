@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage';
 import { useEffect, useMemo, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
@@ -161,7 +162,7 @@ const glassClasses =
 function SingleCard({ project }: { project: MapProject }) {
   return (
     <a href={`/projects/${project.slug}`} className={`block w-72 sm:w-80 group/card ${glassClasses}`}>
-      <img
+      <ResponsiveImage sizes="320px"
         src={project.hero}
         alt={project.title}
         className="w-full aspect-[16/10] object-cover transition-all duration-500 group-hover/card:brightness-105"
@@ -210,7 +211,7 @@ function PopupCarousel({ projects }: { projects: MapProject[] }) {
               opacity: 0.3,
             }}
           >
-            <img
+            <ResponsiveImage sizes="320px"
               src={peek.hero}
               alt=""
               className="w-full h-full object-cover rounded-t-2xl"
@@ -225,7 +226,7 @@ function PopupCarousel({ projects }: { projects: MapProject[] }) {
           href={`/projects/${current.slug}`}
           className="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] z-20"
         >
-          <img
+          <ResponsiveImage sizes="320px"
             src={current.hero}
             alt={current.title}
             className="w-full h-full object-cover rounded-t-2xl"

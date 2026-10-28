@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage';
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -141,7 +142,7 @@ export default function ProjectCard({
                     transition={cardSpring}
                     className="absolute inset-0 -bottom-2 -right-2 rounded-2xl shadow-md rotate-2 z-0 overflow-hidden"
                   >
-                    <img
+                    <ResponsiveImage sizes="(min-width: 1024px) 55vw, 100vw"
                       src={images[(index + 1) % total]}
                       alt=""
                       className="w-full h-full object-cover opacity-40 transition-all duration-500 group-hover:brightness-105"
@@ -156,7 +157,7 @@ export default function ProjectCard({
                     transition={cardSpring}
                     className="absolute inset-0 -bottom-1.5 -right-1.5 rounded-2xl shadow-md -rotate-2 z-[1] overflow-hidden"
                   >
-                    <img
+                    <ResponsiveImage sizes="(min-width: 1024px) 55vw, 100vw"
                       src={images[(index + 2) % total]}
                       alt=""
                       className="w-full h-full object-cover opacity-50 transition-all duration-500 group-hover:brightness-105"
@@ -178,7 +179,7 @@ export default function ProjectCard({
                   transition={cardSpring}
                   className="absolute inset-0"
                 >
-                  <img
+                  <ResponsiveImage sizes="(min-width: 1024px) 55vw, 100vw"
                     src={images[index]}
                     alt={`${title} — ${index + 1}`}
                     className="w-full h-full object-cover transition-all duration-500 group-hover:brightness-105"

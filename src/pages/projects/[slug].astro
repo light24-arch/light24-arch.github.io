@@ -1,19 +1,18 @@
 ---
+import ResponsiveImage from '../../components/ResponsiveImage.astro';
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import FadeIn from '../../components/FadeIn';
 import HorizontalGallery from '../../components/HorizontalGallery';
 import { categoryLabel, statusLabel } from '../../utils/labels';
 import { featureGrid, hiddenLayouts } from '../../utils/featureGrid';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
-  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+  return projects.map((p) => ({ params: { slug: p.id }, props: { project: p } }));
 }
 
 const { project } = Astro.props;
 const { data } = project;
-const { Content } = await project.render();
 
 const specs = [
   { label: '状态', value: statusLabel[data.status] || data.status },
@@ -60,7 +59,7 @@ const specs = [
     </div>
     <!-- 全屏头图 · 保持原始比例 -->
     <div class="w-full">
-      <img src={data.hero} alt={data.title} class="w-full h-auto block" />
+      <ResponsiveImage src={data.hero} loading="eager" fetchpriority="high" alt={data.title} class="w-full h-auto block" />
     </div>
   </header>
 
@@ -85,7 +84,7 @@ const specs = [
         return (
           <div class={`grid grid-cols-12 gap-8 ${g.row}`}>
             <div class={`${g.image}`}>
-              <img src={f.image} alt={f.title} class="w-full h-auto block" loading="lazy" />
+              <ResponsiveImage src={f.image} alt={f.title} class="w-full h-auto block" loading="lazy" />
             </div>
             {!hiddenLayouts.includes(f.layout) && (
               <div class={`${g.text}`}>
@@ -108,7 +107,7 @@ const specs = [
       {data.closing_image && (
         <div class="grid grid-cols-12 gap-8 pt-16">
           <div class="col-span-12">
-            <img src={data.closing_image} alt={`${data.title} — 收尾`} class="w-full h-auto block" loading="lazy" />
+            <ResponsiveImage src={data.closing_image} alt={`${data.title} — 收尾`} class="w-full h-auto block" loading="lazy" />
           </div>
         </div>
       )}

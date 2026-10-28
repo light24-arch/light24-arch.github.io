@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage';
 import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -52,8 +53,11 @@ export default function HeroCarousel({ slides, interval = 5500 }: HeroCarouselPr
           transition={{ opacity: { duration: 1.2 }, scale: { duration: interval / 1000, ease: 'linear' } }}
         >
           <a href={current.href} className="block w-full h-full">
-            <img
+            <ResponsiveImage
               src={current.image}
+              sizes="100vw"
+              loading="eager"
+              fetchPriority={index === 0 ? 'high' : 'auto'}
               alt={current.title}
               className="w-full h-full object-cover"
             />

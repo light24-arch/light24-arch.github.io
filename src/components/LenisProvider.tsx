@@ -5,6 +5,7 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const isMobile = !window.matchMedia('(hover: hover)').matches;
 
     const lenis = new Lenis({
@@ -17,14 +18,17 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
 
     lenisRef.current = lenis;
 
+    let frameId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      frameId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    frameId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(frameId);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 

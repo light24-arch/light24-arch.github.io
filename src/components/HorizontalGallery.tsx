@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage';
 import { useRef } from 'react';
 
 interface HorizontalGalleryProps {
@@ -18,7 +19,7 @@ export default function HorizontalGallery({ images, aspect }: HorizontalGalleryP
             className={`flex-shrink-0 ${aspectClass}`}
             style={{ width: `${100 / images.length}%` }}
           >
-            <img
+            <ResponsiveImage
               src={src}
               alt={`图片 ${i + 1}`}
               className="w-full h-full object-cover block"
