@@ -1,5 +1,5 @@
 import ResponsiveImage from './ResponsiveImage';
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
 
 interface ArtworkItem {
@@ -15,37 +15,35 @@ interface OtherWorksFanOutProps {
 }
 
 export default function OtherWorksFanOut({ items }: OtherWorksFanOutProps) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
+  // Keep multi-stop fades and 3D transforms on the same measured timeline.
+  const animationProgress = useTransform(scrollYProgress, (progress) => progress);
 
-  if (!mounted) return <div className="w-full h-[300vh] bg-white" />;
   if (!items || items.length === 0) return null;
 
   return (
     <>
       {/* ── Desktop: 3D fan-out (md+) ── */}
-      <div ref={containerRef} className="hidden md:block relative w-full h-[300vh]">
+      <div ref={containerRef} data-otherworks-stage className="hidden md:block relative w-full h-[300vh]">
         <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
           {/* ══════ 背景文字：14%可见 → 15%瞬间消失 ══════ */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10">
-            <SplitTextHeadline scrollYProgress={scrollYProgress} />
+            <SplitTextHeadline scrollYProgress={animationProgress} />
           </div>
 
           {/* ══════ 卡片容器：perspective 与 flex 分层 ══════ */}
-          <div className="relative z-50" style={{ perspective: '1500px' }}>
+          <div className="relative z-50 w-[260px] h-[360px]" style={{ perspective: '1500px' }}>
             <div className="w-full h-full flex items-center justify-center">
             {items.map((item, index) => (
               <Card3DTransformWrapper
                 key={item.slug}
                 index={index}
                 totalCards={items.length}
-                scrollYProgress={scrollYProgress}
+                scrollYProgress={animationProgress}
               >
                 <a
                   href={`/artwork/${item.slug}`}
@@ -178,7 +176,8 @@ function Card3DTransformWrapper({
 
   return (
     <motion.div
-      className="absolute origin-center"
+      data-otherworks-card
+      className="absolute inset-0 origin-center"
       style={{
         x,
         y,
@@ -191,7 +190,6 @@ function Card3DTransformWrapper({
         backfaceVisibility: 'hidden',
         WebkitBackfaceVisibility: 'hidden',
         willChange: 'transform',
-        transform: 'translateZ(0)',
       }}
     >
       {children}
