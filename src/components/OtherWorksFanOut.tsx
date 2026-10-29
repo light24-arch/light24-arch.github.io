@@ -1,6 +1,5 @@
 import ResponsiveImage from './ResponsiveImage';
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
 interface ArtworkItem {
   title: string;
@@ -10,44 +9,92 @@ interface ArtworkItem {
   slug: string;
 }
 
-interface OtherWorksFanOutProps {
-  items: ArtworkItem[];
-}
+export default function OtherWorksFanOut({ items }: { items: ArtworkItem[] }) {
+  const stageRef = useRef<HTMLDivElement>(null);
 
-export default function OtherWorksFanOut({ items }: OtherWorksFanOutProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-  // Keep multi-stop fades and 3D transforms on the same measured timeline.
-  const animationProgress = useTransform(scrollYProgress, (progress) => progress);
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const cards = Array.from(stage.querySelectorAll<HTMLElement>('[data-otherworks-card]'));
+    const words = Array.from(stage.querySelectorAll<HTMLElement>('[data-otherworks-word]'));
+    const desktop = window.matchMedia('(min-width: 768px)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
 
-  if (!items || items.length === 0) return null;
+    const reset = () => {
+      delete stage.dataset.animated;
+      cards.forEach((card) => card.removeAttribute('style'));
+      words.forEach((word) => word.removeAttribute('style'));
+    };
+    const update = () => {
+      frame = 0;
+      if (!desktop.matches || reducedMotion.matches) {
+        reset();
+        return;
+      }
+      stage.dataset.animated = 'true';
+      const bounds = stage.getBoundingClientRect();
+      const distance = Math.max(1, stage.offsetHeight - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, -bounds.top / distance));
+      const cardWidth = cards[0]?.offsetWidth ?? 260;
+      const spacing = Math.min(300, (bounds.width - cardWidth - 48) / Math.max(1, cards.length - 1));
+      cards.forEach((card, index) => {
+        const center = index - (cards.length - 1) / 2;
+        const t = Math.min(1, Math.max(0, progress / (0.6 + index * 0.03)));
+        // Start face-on and partly spread so every work stays discoverable.
+        const x = center * spacing * (0.7 + 0.3 * t);
+        const y = Math.abs(center) * 12 * (1 - t);
+        const angle = center * (6 - 4 * t);
+        const scale = 0.88 + 0.12 * t;
+        card.style.transform = `translate3d(${x}px, ${y}px, 0) rotateY(${angle}deg) rotateZ(${center * 2}deg) scale(${scale})`;
+        card.style.zIndex = String(Math.round(50 - Math.abs(center)));
+      });
+      words.forEach((word, index) => {
+        const t = Math.min(1, progress / 0.25);
+        word.style.opacity = String(1 - t);
+        word.style.transform = `translateX(${(index ? 1 : -1) * t * 400}px)`;
+      });
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    const observer = new ResizeObserver(schedule);
+    observer.observe(stage);
+    observer.observe(document.body);
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    document.addEventListener('astro:page-load', schedule);
+    desktop.addEventListener('change', schedule);
+    reducedMotion.addEventListener('change', schedule);
+    update();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      document.removeEventListener('astro:page-load', schedule);
+      desktop.removeEventListener('change', schedule);
+      reducedMotion.removeEventListener('change', schedule);
+      reset();
+    };
+  }, [items.length]);
+
+  if (!items.length) return null;
 
   return (
     <>
-      {/* ── Desktop: 3D fan-out (md+) ── */}
-      <div ref={containerRef} data-otherworks-stage className="hidden md:block relative w-full h-[300vh]">
-        <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
-          {/* ══════ 背景文字：14%可见 → 15%瞬间消失 ══════ */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10">
-            <SplitTextHeadline scrollYProgress={animationProgress} />
+      <div ref={stageRef} data-otherworks-stage className="otherworks-stage">
+        <div className="otherworks-viewport">
+          <div className="otherworks-headline" aria-hidden="true">
+            <span data-otherworks-word>OTHER</span>
+            <span data-otherworks-word>WORKS</span>
           </div>
-
-          {/* ══════ 卡片容器：perspective 与 flex 分层 ══════ */}
-          <div className="relative z-50 w-[260px] h-[360px]" style={{ perspective: '1500px' }}>
-            <div className="w-full h-full flex items-center justify-center">
+          <div className="otherworks-cards">
             {items.map((item, index) => (
-              <Card3DTransformWrapper
-                key={item.slug}
-                index={index}
-                totalCards={items.length}
-                scrollYProgress={animationProgress}
-              >
+              <div key={item.slug} data-otherworks-card>
                 <a
                   href={`/artwork/${item.slug}`}
-                  className="group/card block w-[260px] h-[360px] rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.2)] hover:-translate-y-4 transition-all duration-500 cursor-pointer bg-white border border-stone-100 isolate"
+                  className="group/card block w-full h-full rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.2)] hover:-translate-y-4 transition-all duration-500 cursor-pointer bg-white border border-stone-100 isolate"
                 >
                   <div className="w-full h-full relative overflow-hidden">
                     <ResponsiveImage sizes="(min-width: 768px) 260px, 100vw"
@@ -70,13 +117,11 @@ export default function OtherWorksFanOut({ items }: OtherWorksFanOutProps) {
                     </div>
                   </div>
                 </a>
-              </Card3DTransformWrapper>
+              </div>
             ))}
-            </div>
           </div>
         </div>
       </div>
-
       {/* ── Mobile: 2×2 grid (< md) ── */}
       <div className="grid grid-cols-2 gap-3 md:hidden px-4 pb-12">
         {items.map((item, i) => (
@@ -106,93 +151,5 @@ export default function OtherWorksFanOut({ items }: OtherWorksFanOutProps) {
         ))}
       </div>
     </>
-  );
-}
-
-/* ── SplitText：接力时间轴 [0 → 1 → 1 → 0]，15%处瞬间消失 ── */
-function SplitTextHeadline({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
-  const textLeftX = useTransform(scrollYProgress, [0, 0.15], [0, -500]);
-  const textRightX = useTransform(scrollYProgress, [0, 0.15], [0, 500]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.14, 0.15], [1, 1, 0]);
-
-  return (
-    <>
-      <motion.span
-        style={{ x: textLeftX, opacity: textOpacity }}
-        className="text-[12vw] font-black text-stone-100 absolute select-none tracking-tighter"
-      >
-        OTHER
-      </motion.span>
-      <motion.span
-        style={{ x: textRightX, opacity: textOpacity }}
-        className="text-[12vw] font-black text-stone-200/60 absolute select-none tracking-tighter mt-[14vw]"
-      >
-        WORKS
-      </motion.span>
-    </>
-  );
-}
-
-/* ── 3D card engine：14%隐藏 → 15%瞬间实体 → 70%扇形展开 ── */
-function Card3DTransformWrapper({
-  index,
-  totalCards,
-  scrollYProgress,
-  children,
-}: {
-  index: number;
-  totalCards: number;
-  scrollYProgress: MotionValue<number>;
-  children: React.ReactNode;
-}) {
-  const offsetFromCenter = index - (totalCards - 1) / 2;
-
-  /* Stagger per card */
-  const stagger = index * 0.03;
-  const tEnd = 0.7 + stagger;
-
-  /* ══ 所有3D运动在0.15后触发（无opacity — 用rotateY+scale做空间reveal） ══ */
-  const endX = offsetFromCenter * 300;
-  const x = useTransform(scrollYProgress, [0.15, tEnd], [0, endX]);
-
-  /* Y — deck stack → release */
-  const yStart = (index < 2 ? 1 : -1) * (totalCards - index) * 4;
-  const y = useTransform(scrollYProgress, [0.15, tEnd], [yStart, 0]);
-
-  /* Z-depth — from behind screen plane → forward */
-  const z = useTransform(scrollYProgress, [0.15, tEnd], [-40, 0]);
-
-  /* rotateY — 72°侧立 → 转正微外旋 (不用90°，避免backface compositing) */
-  const rotateY = useTransform(scrollYProgress, [0.15, tEnd], [72, offsetFromCenter * 4]);
-
-  /* rotateZ — 专属倾角 */
-  const customZRotations = [-3, 3, -3, 3];
-  const rotateZ = useTransform(scrollYProgress, [0.15, tEnd], [0, customZRotations[index]]);
-
-  /* scale — 压缩 → 释放 */
-  const scale = useTransform(scrollYProgress, [0.15, tEnd], [0.5, 1]);
-
-  const zIndex = Math.round(50 - Math.abs(offsetFromCenter));
-
-  return (
-    <motion.div
-      data-otherworks-card
-      className="absolute inset-0 origin-center"
-      style={{
-        x,
-        y,
-        z,
-        scale,
-        rotateY,
-        rotateZ,
-        zIndex,
-        transformStyle: 'preserve-3d',
-        backfaceVisibility: 'hidden',
-        WebkitBackfaceVisibility: 'hidden',
-        willChange: 'transform',
-      }}
-    >
-      {children}
-    </motion.div>
   );
 }
